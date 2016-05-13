@@ -139,6 +139,7 @@ static const CommandLineOption options[] = {
     {"--commit-interval NUMBER", "if passed the cache will be flushed to git every NUMBER of commits"},
     {"--stats", "after a run print some statistics about the rules"},
     {"--svn-branches", "Use the contents of SVN when creating branches, Note: SVN tags are branches as well"},
+    {"--do-not-infer-merges", "Do not use svn 'copy from path' to infer merge points."},
     {"-h, --help", "show help"},
     {"-v, --version", "show version"},
     CommandLineLastOption

@@ -444,7 +444,7 @@ public:
 };
 
 int SvnPrivate::exportRevision(int revnum)
-{
+{    
     SvnRevision rev(revnum, fs, global_pool);
     rev.allMatchRules = allMatchRules;
     rev.repositories = repositories;
@@ -541,7 +541,7 @@ int SvnRevision::fetchRevProps()
 }
 
 int SvnRevision::commit()
-{
+{   
     // now create the commit
     if (fetchRevProps() != EXIT_SUCCESS)
         return EXIT_FAILURE;
@@ -692,7 +692,7 @@ int SvnRevision::exportInternal(const char *key, const svn_fs_path_change_t *cha
     needCommit = true;
     QString svnprefix, repository, branch, path;
     splitPathName(rule, current, &svnprefix, &repository, &branch, &path);
-
+    
     Repository *repo = repositories.value(repository, 0);
     if (!repo) {
         if (change->change_kind != svn_fs_path_change_delete)
@@ -808,7 +808,8 @@ int SvnRevision::exportInternal(const char *key, const svn_fs_path_change_t *cha
     // changes across directory re-organizations and wholesale branch
     // imports.
     //
-    if (path_from != NULL && prevrepository == repository && prevbranch != branch) {
+    if (!CommandLineParser::instance()->contains("do-not-infer-merges") &&
+        path_from != NULL && prevrepository == repository && prevbranch != branch) {
         if(ruledebug)
             qDebug() << "copy from branch" << prevbranch << "to branch" << branch << "@rev" << rev_from;
         txn->noteCopyFromBranch (prevbranch, rev_from);
