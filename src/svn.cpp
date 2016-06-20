@@ -793,6 +793,21 @@ int SvnRevision::exportInternal(const char *key, const svn_fs_path_change_t *cha
             return EXIT_SUCCESS;
         }
     }
+    
+        
+    if (revnum == 191453)
+    {
+        printf("Force creating support/2.1 branch since no SVN branching exists.\n");
+        if (repo->createBranch("support/2.1", revnum, "master", 191243) == EXIT_FAILURE)
+            return EXIT_FAILURE;
+    }
+    else if (revnum == 207634)
+    {
+        printf("Force creating support/3.0 branch since no SVN branching exists.\n");
+        if (repo->createBranch("support/3.0", revnum, "master", 207528) == EXIT_FAILURE)
+            return EXIT_FAILURE;
+    }
+    
     Repository::Transaction *txn = transactions.value(repository + branch, 0);
     if (!txn) {
         txn = repo->newTransaction(branch, svnprefix, revnum);
